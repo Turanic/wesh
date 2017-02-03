@@ -9,20 +9,27 @@ namespace parser
 {
 void parse_input(const std::string &input)
 {
+  using boost::spirit::x3::expectation_failure;
   using boost::spirit::x3::space;
 
   auto iter = input.begin();
   const auto end = input.end();
 
-  bool success = phrase_parse(iter, end, grammar::statements_rule, space);
+  bool success = false;
+  try
+  {
+     success = phrase_parse(iter, end, grammar::wesh_rule, space);
+  }
+  catch (const expectation_failure<decltype(iter)>& error)
+  {
+    std::cerr << "syntax error : expecting " << error.which()
+              << " after character " << *(error.where()) << '\n';
+  }
 
   if (success && iter == end)
     std::cout << "SUCCESS!! \n";
   else
-    std::cout << "ERROR >< \n"
-              << "iterator stopped at character :"
-              << *iter
-              << '\n';
+    std::cout << "ERROR >< \n";
 }
 
 } // parser
