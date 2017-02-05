@@ -18,7 +18,7 @@ struct redir_node
   std::string file {};
 };
 
-struct cmd_element : x3::variant<std::string, redir_node>
+struct cmd_element : public x3::variant<std::string, redir_node>
 {
   using base_type::base_type;
   using base_type::operator=;

@@ -5,6 +5,7 @@
 
 #include "ast.hh"
 #include "grammar.hh"
+#include "visitors/printer.hh"
 
 namespace parser
 {
@@ -18,9 +19,11 @@ void parse_input(const std::string &input)
 
   bool success = false;
   ast::ast_root ast;
+  visitors::Printer visitor {};
   try
   {
-     success = phrase_parse(iter, end, grammar::statements_rule, space, ast);
+    success = phrase_parse(iter, end, grammar::statements_rule, space, ast);
+    visitor(ast);
   }
   catch (const expectation_failure<decltype(iter)>& error)
   {
@@ -32,11 +35,6 @@ void parse_input(const std::string &input)
     std::cout << "SUCCESS!! \n";
   else
     std::cout << "ERROR >< \n";
-  for (const auto& e : *ast)
-  {
-    (void)e;
-    std::cerr << "test\n";
-  }
 }
 
 } // parser
