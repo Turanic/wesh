@@ -1,7 +1,9 @@
 #pragma once
 
 #include <boost/spirit/home/x3.hpp>
+#include <vector>
 
+#include "ast.hh"
 #include "symbols.hh"
 
 namespace parser
@@ -9,26 +11,28 @@ namespace parser
 namespace grammar
 {
 using boost::spirit::x3::alnum;
+using boost::spirit::x3::char_;
 using boost::spirit::x3::eoi;
 using boost::spirit::x3::eol;
+using boost::spirit::x3::lexeme;
 using boost::spirit::x3::lit;
 using boost::spirit::x3::rule;
 using boost::spirit::x3::ulong_;
 
 /* declaring rules */
-rule<class Wesh> wesh_rule{ "main_rule" };
-rule<class Statements> statements_rule{ "statement_list" };
-rule<class Logics> logics_rule{ "logic_list" };
-rule<class Pipeline> pipeline_rule{ "pipeline" };
+rule<class Wesh, ast::ast_root> wesh_rule                     { "main_rule" };
+rule<class Statements, ast::statement_node> statements_rule   { "statement_list" };
+rule<class Logics, ast::logical_node> logics_rule             { "logic_list" };
+rule<class Pipeline, ast::pipeline_node> pipeline_rule        { "pipeline" };
 
-rule<class Simple_Command> simple_command_rule{ "simple_command" };
+rule<class Simple_Command, ast::cmd_node> simple_command_rule    { "simple_command" };
 
-rule<class Element> element_rule{ "element" };
-rule<class Prefix> prefix_rule{ "prefix" };
+rule<class Element, ast::cmd_element> element_rule               { "element" };
+rule<class Prefix, ast::cmd_element> prefix_rule                 { "prefix" };
 
-rule<class Redirection> redirection_rule{ "redirection" };
-rule<class Word> word{ "word" };
-rule<class Assignement> assignement{ "assignement" };
+rule<class Redirection, ast::redir_node> redirection_rule   { "redirection" };
+rule<class Word, std::string> word                          { "word" };
+rule<class Assignement, std::string> assignement            { "assignement" };
 /* *** */
 
 /* defining rules */
@@ -45,8 +49,8 @@ const auto prefix_rule_def = assignement | redirection_rule;
 
 const auto redirection_rule_def = -ulong_ >> redir_op >> word;
 
-const auto word_def = +(alnum | '.' | '-');
-const auto assignement_def = +alnum >> '=';
+const auto word_def = lexeme[+(alnum | char_(".-"))];
+const auto assignement_def = lexeme[+alnum >> '='];
 /* *** */
 
 /* link rules */
