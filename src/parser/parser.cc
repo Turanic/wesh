@@ -22,7 +22,7 @@ void parse_input(const std::string &input)
   visitors::Printer visitor {};
   try
   {
-    success = phrase_parse(iter, end, grammar::statements_rule, space, ast);
+    success = phrase_parse(iter, end, grammar::wesh_rule, space, ast);
     visitor(ast);
   }
   catch (const expectation_failure<decltype(iter)>& error)

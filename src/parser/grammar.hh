@@ -21,9 +21,9 @@ using boost::spirit::x3::ulong_;
 
 /* declaring rules */
 rule<class Wesh, ast::ast_root> wesh_rule                     { "main_rule" };
-rule<class Statements, ast::statement_node> statements_rule   { "statement_list" };
-rule<class Logics, ast::logical_node> logics_rule             { "logic_list" };
-rule<class Pipeline, ast::pipeline_node> pipeline_rule        { "pipeline" };
+rule<class Statements, ast::statements_nodes> statements_rule   { "statement_list" };
+rule<class Logics, ast::expression_node> logics_rule             { "logic_list" };
+rule<class Pipeline, ast::expression_node> pipeline_rule        { "pipeline" };
 
 rule<class Simple_Command, ast::cmd_node> simple_command_rule    { "simple_command" };
 
@@ -37,10 +37,10 @@ rule<class Assignement, std::string> assignement            { "assignement" };
 
 /* defining rules */
 const auto wesh_rule_def = -statements_rule >> (eol | eoi);
-const auto statements_rule_def = (logics_rule % (eol | separators))
-                                 >> -(eol | separators);
-const auto logics_rule_def = pipeline_rule % logical_op;
-const auto pipeline_rule_def = simple_command_rule % '|';
+const auto statements_rule_def = logics_rule >> *(separators >> logics_rule) >> -separators;
+const auto logics_rule_def = pipeline_rule >> *(logical_op >> pipeline_rule);
+const auto pipeline_rule_def = simple_command_rule
+                               >> *(pipe_op >> simple_command_rule);
 
 const auto simple_command_rule_def =
   (*prefix_rule >> +element_rule) | +prefix_rule;

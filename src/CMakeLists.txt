@@ -1,5 +1,5 @@
 # set compilation flags
-set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wextra -pedantic -Weffc++")
+set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wextra -pedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "-g3 -fsanitize=address -fsanitize=undefined -Werror")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
