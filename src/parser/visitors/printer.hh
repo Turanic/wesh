@@ -19,7 +19,7 @@ public:
   void operator()(const ast::operand& op) const;
   void operator()(const ast::operator_node& node) const;
   void operator()(const ast::expression_node& node) const;
-  void operator()(const ast::statements_nodes& node) const;
+  void operator()(const ast::statement_node& node) const;
   void operator()(const ast::ast_root& node) const;
 };
 } // visitors

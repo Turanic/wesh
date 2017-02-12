@@ -97,8 +97,8 @@ void Printer::operator()(const ast::cmd_node& node) const
   ++ident;
   std::cout << ident << "command\n";
 
-  for (const auto& element_ptr : node)
-    operator()(element_ptr.get());
+  for (const auto& element : node)
+    operator()(element);
 
   --ident;
 }
@@ -152,22 +152,27 @@ void Printer::operator()(const ast::expression_node& node) const
   --ident;
 }
 
-void Printer::operator()(const ast::statements_nodes& node) const
+void Printer::operator()(const ast::statement_node& node) const
 {
-  operator()(node.first);
-  for (const auto& operation : node.rest)
-    operator()(operation);
-  if (node.last == grammar::symbol_type::AND)
-    std::cout << " &\n";
+  using grammar::symbol_type;
+
+  std::cout << ident << "statement: "
+            << (node.separator == symbol_type::AND ? "[background]\n" : "\n")
+            << ident << "(\n";
+
+  operator()(node.exp);
+
+  std::cout << ident << ")\n";
 }
 
 void Printer::operator()(const ast::ast_root& node) const
 {
   std::cout << "ast - begin\n";
   if (node)
-    operator()(*node);
+    for (const auto& statement : *node)
+      operator()(statement);
   else
-    std::cout << "empty tree\n";
+    std::cout << "(empty tree)\n";
   std::cout << "ast - end\n";
 }
 

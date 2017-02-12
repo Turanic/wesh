@@ -47,14 +47,14 @@ struct expression_node
   std::vector<operator_node> rest;
 };
 
-struct statements_nodes
+struct statement_node
 {
-  operand first;
-  std::vector<operator_node> rest;
-  grammar::symbol_type last;
+  expression_node exp;
+  grammar::symbol_type separator;
 };
 
-using ast_root = boost::optional<statements_nodes>;
+using statements = std::vector<statement_node>;
+using ast_root = boost::optional<statements>;
 
 } // ast
 } // parser
@@ -62,4 +62,4 @@ using ast_root = boost::optional<statements_nodes>;
 BOOST_FUSION_ADAPT_STRUCT(parser::ast::redir_node, io_number, type, file)
 BOOST_FUSION_ADAPT_STRUCT(parser::ast::operator_node, op_type, second)
 BOOST_FUSION_ADAPT_STRUCT(parser::ast::expression_node, first, rest)
-BOOST_FUSION_ADAPT_STRUCT(parser::ast::statements_nodes, first, rest, last)
+BOOST_FUSION_ADAPT_STRUCT(parser::ast::statement_node, exp, separator)
