@@ -95,7 +95,7 @@ void Printer::operator()(const ast::cmd_element& element) const
 void Printer::operator()(const ast::cmd_node& node) const
 {
   ++ident;
-  std::cout << ident << "command\n";
+  std::cout << ident << "command =>\n";
 
   for (const auto& element : node)
     operator()(element);
@@ -112,26 +112,20 @@ void Printer::operator()(const ast::operator_node& node) const
 {
   using grammar::symbol_type;
 
-  std::cout << ident;
+  std::cout << ident << "operation ";
   switch (node.op_type)
   {
   case symbol_type::DOUBLE_AND:
-    std::cout << " && ";
+    std::cout << "&&";
     break;
   case symbol_type::DOUBLE_OR:
-    std::cout << " || ";
-    break;
-  case symbol_type::AND:
-    std::cout << " & ";
+    std::cout << "||";
     break;
   case symbol_type::OR:
-    std::cout << " | ";
-    break;
-  case symbol_type::SEMI_COLON:
-    std::cout << " ; ";
+    std::cout << "|";
     break;
   default:
-    assert(false && "invalid redirection");
+    assert(false && "invalid operation");
     break;
   }
   std::cout << std::endl;
@@ -156,8 +150,8 @@ void Printer::operator()(const ast::statement_node& node) const
 {
   using grammar::symbol_type;
 
-  std::cout << ident << "statement: "
-            << (node.separator == symbol_type::AND ? "[background]\n" : "\n")
+  std::cout << ident << "statement"
+            << (node.separator == symbol_type::AND ? " [background]\n" : "\n")
             << ident << "(\n";
 
   operator()(node.exp);
@@ -167,13 +161,13 @@ void Printer::operator()(const ast::statement_node& node) const
 
 void Printer::operator()(const ast::ast_root& node) const
 {
-  std::cout << "ast - begin\n";
+  std::cout << "###ast - begin###\n";
   if (node)
     for (const auto& statement : *node)
       operator()(statement);
   else
     std::cout << "(empty tree)\n";
-  std::cout << "ast - end\n";
+  std::cout << "##ast - end###\n";
 }
 
 } // visitors
