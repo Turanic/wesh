@@ -1,5 +1,6 @@
 set(SRC_PARSER
     parser.cc
-    visitors/printer.cc)
+    ast/printer.cc
+    grammar/symbols.cc)
 
 add_library(parser_objs OBJECT ${SRC_PARSER})

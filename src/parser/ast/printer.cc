@@ -5,7 +5,7 @@
 
 namespace parser
 {
-namespace visitors
+namespace ast
 {
 namespace
 {
@@ -170,5 +170,5 @@ void Printer::operator()(const ast::ast_root& node) const
   std::cout << "##ast - end###\n";
 }
 
-} // visitors
+} // ast
 } // parser

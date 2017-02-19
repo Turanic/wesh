@@ -3,9 +3,9 @@
 #include <boost/spirit/home/x3.hpp>
 #include <iostream>
 
-#include "ast.hh"
-#include "grammar.hh"
-#include "visitors/printer.hh"
+#include "ast/ast.hh"
+#include "ast/printer.hh"
+#include "grammar/grammar.hh"
 
 namespace parser
 {
@@ -19,7 +19,7 @@ void parse_input(const std::string &input)
 
   bool success = false;
   ast::ast_root ast;
-  visitors::Printer visitor {};
+  ast::Printer visitor {};
   try
   {
     success = phrase_parse(iter, end, grammar::wesh_rule, space, ast);

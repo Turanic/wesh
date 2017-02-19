@@ -6,30 +6,32 @@
 #include <string>
 #include <vector>
 
-#include "symbols.hh"
+#include <parser/grammar/symbols.hh>
 
 namespace parser
 {
 namespace ast
 {
-namespace x3 = boost::spirit::x3;
+using boost::spirit::x3::forward_ast;
+using boost::spirit::x3::variant;
+using grammar::symbol_type;
 
 struct redir_node
 {
   boost::optional<long> io_number;
-  grammar::symbol_type type;
+  symbol_type type;
   std::string file;
 };
 
-struct cmd_element : public x3::variant<std::string, redir_node>
+struct cmd_element : public variant<std::string, redir_node>
 {
   using base_type::base_type;
   using base_type::operator=;
 };
-using cmd_node = std::vector<x3::forward_ast<cmd_element>>;
+using cmd_node = std::vector<forward_ast<cmd_element>>;
 
 struct expression_node;
-struct operand : public x3::variant<cmd_node, x3::forward_ast<expression_node>>
+struct operand : public variant<cmd_node, forward_ast<expression_node>>
 {
   using base_type::base_type;
   using base_type::operator=;
@@ -37,7 +39,7 @@ struct operand : public x3::variant<cmd_node, x3::forward_ast<expression_node>>
 
 struct operator_node
 {
-  grammar::symbol_type op_type;
+  symbol_type op_type;
   operand second;
 };
 
@@ -50,7 +52,7 @@ struct expression_node
 struct statement_node
 {
   expression_node exp;
-  grammar::symbol_type separator;
+  symbol_type separator;
 };
 
 using statements = std::vector<statement_node>;
@@ -58,8 +60,3 @@ using ast_root = boost::optional<statements>;
 
 } // ast
 } // parser
-
-BOOST_FUSION_ADAPT_STRUCT(parser::ast::redir_node, io_number, type, file)
-BOOST_FUSION_ADAPT_STRUCT(parser::ast::operator_node, op_type, second)
-BOOST_FUSION_ADAPT_STRUCT(parser::ast::expression_node, first, rest)
-BOOST_FUSION_ADAPT_STRUCT(parser::ast::statement_node, exp, separator)

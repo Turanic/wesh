@@ -3,7 +3,8 @@
 #include <boost/spirit/home/x3.hpp>
 #include <vector>
 
-#include "ast.hh"
+#include <parser/ast/adapt_ast.hh>
+
 #include "symbols.hh"
 
 namespace parser
@@ -37,17 +38,18 @@ rule<class Assignement, std::string> assignement            { "assignement" };
 
 /* defining rules */
 const auto wesh_rule_def = -statements_rule >> (eol | eoi);
-const auto statements_rule_def = +(logics_rule >> separators);
-const auto logics_rule_def = pipeline_rule >> *(logical_op >> pipeline_rule);
+const auto statements_rule_def = +(logics_rule >> separators_get());
+const auto logics_rule_def = pipeline_rule
+                             >> *(logical_op_get() >> pipeline_rule);
 const auto pipeline_rule_def = simple_command_rule
-                               >> *(pipe_op >> simple_command_rule);
+                               >> *(pipe_op_get() >> simple_command_rule);
 
 const auto simple_command_rule_def =
   (*prefix_rule >> +element_rule) | +prefix_rule;
 const auto element_rule_def = word | redirection_rule;
 const auto prefix_rule_def = assignement | redirection_rule;
 
-const auto redirection_rule_def = -ulong_ >> redir_op >> word;
+const auto redirection_rule_def = -ulong_ >> redir_op_get() >> word;
 
 const auto word_def = lexeme[+(alnum | char_(".-"))];
 const auto assignement_def = lexeme[+alnum >> '='];
