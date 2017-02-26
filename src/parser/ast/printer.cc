@@ -35,7 +35,7 @@ public:
 
     return *this;
   }
-};
+} ident;
 
 std::ostream& operator<<(std::ostream& os, const Ident& ident)
 {
@@ -43,9 +43,6 @@ std::ostream& operator<<(std::ostream& os, const Ident& ident)
 
   return os;
 }
-
-Ident ident {};
-
 } // anonymous
 
 void Printer::operator()(const std::string& str) const

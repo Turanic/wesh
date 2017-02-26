@@ -9,10 +9,12 @@ include_directories(
   ${Boost_INCLUDE_DIRS})
 
 # get objects libraries from sources
+add_subdirectory(exec)
 add_subdirectory(parser)
 
 
 # create the executable with project name
 add_executable(${PROJECT_NAME}
   main.cc
+  $<TARGET_OBJECTS:exec_objs>
   $<TARGET_OBJECTS:parser_objs>)

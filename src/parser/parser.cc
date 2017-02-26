@@ -3,6 +3,8 @@
 #include <boost/spirit/home/x3.hpp>
 #include <iostream>
 
+#include <exec/launcher.hh>
+
 #include "ast/ast.hh"
 #include "ast/printer.hh"
 #include "grammar/grammar.hh"
@@ -19,11 +21,11 @@ void parse_input(const std::string &input)
 
   bool success = false;
   ast::ast_root ast;
-  ast::Printer visitor {};
+  exec::Launcher visitor2 {};
   try
   {
     success = phrase_parse(iter, end, grammar::wesh_rule, space, ast);
-    visitor(ast);
+    visitor2(ast);
   }
   catch (const expectation_failure<decltype(iter)>& error)
   {
