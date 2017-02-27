@@ -3,9 +3,11 @@
 #include <cassert>
 #include <iostream>
 
-namespace parser
-{
+#include <parser/grammar/symbols.hh>
+
 namespace ast
+{
+namespace visitors
 {
 namespace
 {
@@ -54,7 +56,7 @@ void Printer::operator()(const std::string& str) const
 
 void Printer::operator()(const ast::redir_node& redir) const
 {
-  using grammar::symbol_type;
+  using parser::grammar::symbol_type;
 
   ++ident;
   std::cout << ident << "redirection: ";
@@ -86,7 +88,7 @@ void Printer::operator()(const ast::redir_node& redir) const
 
 void Printer::operator()(const ast::cmd_element& element) const
 {
-  boost::apply_visitor(Printer(), element);
+  boost::apply_visitor(*this, element);
 }
 
 void Printer::operator()(const ast::cmd_node& node) const
@@ -102,12 +104,12 @@ void Printer::operator()(const ast::cmd_node& node) const
 
 void Printer::operator()(const ast::operand& op) const
 {
-  boost::apply_visitor(Printer(), op);
+  boost::apply_visitor(*this, op);
 }
 
 void Printer::operator()(const ast::operator_node& node) const
 {
-  using grammar::symbol_type;
+  using parser::grammar::symbol_type;
 
   std::cout << ident << "operation ";
   switch (node.op_type)
@@ -145,7 +147,7 @@ void Printer::operator()(const ast::expression_node& node) const
 
 void Printer::operator()(const ast::statement_node& node) const
 {
-  using grammar::symbol_type;
+  using parser::grammar::symbol_type;
 
   std::cout << ident << "statement"
             << (node.separator == symbol_type::AND ? " [background]\n" : "\n")
@@ -167,5 +169,5 @@ void Printer::operator()(const ast::ast_root& node) const
   std::cout << "##ast - end###\n";
 }
 
+} // visitors
 } // ast
-} // parser

@@ -2,7 +2,9 @@
 
 #include <string>
 
+#include <ast/ast.hh>
+
 namespace parser
 {
-void parse_input(const std::string &input);
+ast::ast_root parse_input(const std::string &input);
 }

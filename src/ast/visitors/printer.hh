@@ -2,12 +2,13 @@
 
 #include <string>
 
-#include "ast.hh"
+#include <ast/ast.hh>
+
 #include "visitor_interface.hh"
 
-namespace parser
-{
 namespace ast
+{
+namespace visitors
 {
 class Printer : public VisitorInterface
 {
@@ -22,5 +23,5 @@ public:
   void operator()(const ast::statement_node& node) const override;
   void operator()(const ast::ast_root &node) const override;
 };
+} // visitors
 } // ast
-} // parser

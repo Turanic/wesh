@@ -1,10 +1,11 @@
 #pragma once
 
+#include <ast/ast.hh>
 #include <boost/variant/apply_visitor.hpp>
 
-namespace parser
-{
 namespace ast
+{
+namespace visitors
 {
 class VisitorInterface : public boost::static_visitor<>
 {
@@ -19,5 +20,5 @@ public:
   virtual void operator()(const ast::statement_node& node) const = 0;
   virtual void operator()(const ast::ast_root& node) const = 0;
 };
+} // visitors
 } // ast
-} // parser

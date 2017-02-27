@@ -1,20 +1,17 @@
 #pragma once
 
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/spirit/home/x3/support/ast/variant.hpp>
-#include <boost/optional.hpp>
 #include <string>
 #include <vector>
 
+#include <boost/optional.hpp>
+#include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <parser/grammar/symbols.hh>
 
-namespace parser
-{
 namespace ast
 {
 using boost::spirit::x3::forward_ast;
 using boost::spirit::x3::variant;
-using grammar::symbol_type;
+using parser::grammar::symbol_type;
 
 struct redir_node
 {
@@ -59,4 +56,3 @@ using statements = std::vector<statement_node>;
 using ast_root = boost::optional<statements>;
 
 } // ast
-} // parser

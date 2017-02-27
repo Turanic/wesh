@@ -2,14 +2,16 @@
 
 #include <string>
 
-#include <parser/ast/ast.hh>
-#include <parser/ast/visitor_interface.hh>
+#include <ast/ast.hh>
+#include <exec/command.hh>
 
-namespace parser
+#include "visitor_interface.hh"
+
+namespace ast
 {
-namespace exec
+namespace visitors
 {
-class Launcher : public ast::VisitorInterface
+class Launcher : public VisitorInterface
 {
 public:
   void operator()(const std::string& str) const override;
@@ -21,6 +23,9 @@ public:
   void operator()(const ast::expression_node& node) const override;
   void operator()(const ast::statement_node& node) const override;
   void operator()(const ast::ast_root &node) const override;
+
+private:
+  mutable exec::Command current_cmd_{};
 };
-} // exec
-} // parser
+} // visitors
+} // ast

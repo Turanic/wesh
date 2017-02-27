@@ -1,19 +1,13 @@
 #include "launcher.hh"
 
-#include "command.hh"
-
-namespace parser
+namespace ast
 {
-namespace exec
+namespace visitors
 {
-namespace
-{
-::exec::Command current_cmd;
-} // anonymous
 
 void Launcher::operator()(const std::string& str) const
 {
-  current_cmd += str;
+  current_cmd_ += str;
 }
 
 void Launcher::operator()(const ast::redir_node&) const
@@ -23,32 +17,32 @@ void Launcher::operator()(const ast::redir_node&) const
 
 void Launcher::operator()(const ast::cmd_element& element) const
 {
-  boost::apply_visitor(Launcher(), element);
+  boost::apply_visitor(*this, element);
 }
 
 void Launcher::operator()(const ast::cmd_node& node) const
 {
   for (const auto& element : node)
     operator()(element);
-  current_cmd();
+  current_cmd_();
 }
 
 void Launcher::operator()(const ast::operand& op) const
 {
-  boost::apply_visitor(Launcher(), op);
+  boost::apply_visitor(*this, op);
 }
 
 void Launcher::operator()(const ast::operator_node& node) const
 {
-  using grammar::symbol_type;
+  using parser::grammar::symbol_type;
 
   switch (node.op_type)
   {
   case symbol_type::DOUBLE_AND:
-    if (!current_cmd.rcode) return;
+    if (!current_cmd_.rcode) return;
     break;
   case symbol_type::DOUBLE_OR:
-    if (current_cmd.rcode) return;
+    if (current_cmd_.rcode) return;
     break;
   case symbol_type::OR:
     break;
@@ -78,5 +72,5 @@ void Launcher::operator()(const ast::ast_root& node) const
       operator()(statement);
 }
 
-} // launcher
-} // parser
+} // visitors
+} // ast

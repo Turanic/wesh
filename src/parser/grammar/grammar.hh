@@ -1,9 +1,9 @@
 #pragma once
 
-#include <boost/spirit/home/x3.hpp>
 #include <vector>
 
-#include <parser/ast/adapt_ast.hh>
+#include <ast/adapt_ast.hh>
+#include <boost/spirit/home/x3.hpp>
 
 #include "symbols.hh"
 
