@@ -20,7 +20,7 @@ ast::ast_root parse_input(const std::string &input)
   ast::ast_root ast;
   try
   {
-    success = phrase_parse(iter, end, grammar::wesh_rule, space, ast);
+    success = phrase_parse(iter, end, rule_get(), space, ast);
   }
   catch (const expectation_failure<decltype(iter)>& error)
   {
