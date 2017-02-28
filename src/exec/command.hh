@@ -19,12 +19,10 @@ public:
   void operator()()
   {
     assert(name);
-    rcode = *name == "false" ? false : true;
     std::cerr << "executing command " << *name << '\n';
+    rcode = start_process(*name, args);
     args.clear();
     name = {};
-
-    // start_process(*this);
   }
 
   void operator+=(const std::string& arg)

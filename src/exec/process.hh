@@ -1,8 +1,10 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 namespace exec
 {
-class Command;
-int start_process(const Command& cmd);
+int start_process(std::string name, std::vector<std::string> args);
 // int start_pipeline();
 } // exec
