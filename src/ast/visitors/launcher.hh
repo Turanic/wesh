@@ -1,10 +1,8 @@
 #pragma once
 
 #include <string>
-
 #include <ast/ast.hh>
 #include <exec/command.hh>
-
 #include "visitor_interface.hh"
 
 namespace ast
@@ -22,7 +20,7 @@ public:
   void operator()(const ast::operator_node& node) const override;
   void operator()(const ast::expression_node& node) const override;
   void operator()(const ast::statement_node& node) const override;
-  void operator()(const ast::ast_root &node) const override;
+  void operator()(const ast::ast_root& node) const override;
 
 private:
   mutable exec::Command current_cmd_{};

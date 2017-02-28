@@ -1,7 +1,6 @@
 #pragma once
 
 #include <boost/fusion/include/adapt_struct.hpp>
-
 #include "ast.hh"
 
 BOOST_FUSION_ADAPT_STRUCT(ast::redir_node, io_number, type, file)

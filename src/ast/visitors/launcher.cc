@@ -4,7 +4,6 @@ namespace ast
 {
 namespace visitors
 {
-
 void Launcher::operator()(const std::string& str) const
 {
   current_cmd_ += str;
@@ -12,7 +11,6 @@ void Launcher::operator()(const std::string& str) const
 
 void Launcher::operator()(const ast::redir_node&) const
 {
-
 }
 
 void Launcher::operator()(const ast::cmd_element& element) const
@@ -39,10 +37,12 @@ void Launcher::operator()(const ast::operator_node& node) const
   switch (node.op_type)
   {
   case symbol_type::DOUBLE_AND:
-    if (!current_cmd_.rcode) return;
+    if (!current_cmd_.rcode)
+      return;
     break;
   case symbol_type::DOUBLE_OR:
-    if (current_cmd_.rcode) return;
+    if (current_cmd_.rcode)
+      return;
     break;
   case symbol_type::OR:
     break;

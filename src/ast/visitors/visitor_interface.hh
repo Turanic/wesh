@@ -10,6 +10,13 @@ namespace visitors
 class VisitorInterface : public boost::static_visitor<>
 {
 public:
+  VisitorInterface() = default;
+  virtual ~VisitorInterface() noexcept = default;
+  VisitorInterface(const VisitorInterface&) = delete;
+  VisitorInterface& operator=(const VisitorInterface&) = delete;
+  VisitorInterface(VisitorInterface&&) noexcept = default;
+  VisitorInterface& operator=(VisitorInterface&&) noexcept = default;
+
   virtual void operator()(const std::string& str) const = 0;
   virtual void operator()(const ast::redir_node& redir) const = 0;
   virtual void operator()(const ast::cmd_element& element) const = 0;

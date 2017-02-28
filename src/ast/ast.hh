@@ -2,7 +2,6 @@
 
 #include <string>
 #include <vector>
-
 #include <boost/optional.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <parser/grammar/symbols.hh>

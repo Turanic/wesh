@@ -1,10 +1,7 @@
 #include "process.hh"
-
 #include <iostream>
-
-#include <unistd.h>
 #include <sys/wait.h>
-
+#include <unistd.h>
 #include "command.hh"
 
 namespace exec
@@ -12,7 +9,7 @@ namespace exec
 int start_process(const Command&)
 {
   const auto pid = fork();
-  char *const test[] = { nullptr };
+  char* const test[] = { nullptr };
   switch (pid)
   {
   case -1: // error

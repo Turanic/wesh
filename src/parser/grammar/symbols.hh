@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-
 #include <boost/spirit/home/x3.hpp>
 
 namespace parser

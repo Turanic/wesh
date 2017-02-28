@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-
 #include <ast/ast.hh>
 #include <boost/spirit/home/x3.hpp>
 

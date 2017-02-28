@@ -18,7 +18,6 @@ symbol_table_t& separators_get()
   }
 
   return separators;
-
 }
 
 symbol_table_t& logical_op_get()

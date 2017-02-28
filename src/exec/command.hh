@@ -1,10 +1,9 @@
 #pragma once
 
-#include <boost/optional.hpp>
 #include <cassert>
 #include <iostream>
 #include <vector>
-
+#include <boost/optional.hpp>
 #include "process.hh"
 
 namespace exec
@@ -12,8 +11,8 @@ namespace exec
 class Command
 {
 private:
-  boost::optional<std::string> name {};
-  std::vector<std::string> args {};
+  boost::optional<std::string> name{};
+  std::vector<std::string> args{};
 
 public:
   bool rcode = false;
@@ -25,7 +24,7 @@ public:
     args.clear();
     name = {};
 
-    //start_process(*this);
+    // start_process(*this);
   }
 
   void operator+=(const std::string& arg)

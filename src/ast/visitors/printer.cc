@@ -1,8 +1,6 @@
 #include "printer.hh"
-
 #include <cassert>
 #include <iostream>
-
 #include <parser/grammar/symbols.hh>
 
 namespace ast
@@ -14,6 +12,7 @@ namespace
 class Ident
 {
 private:
+  /* identation size constant */
   static constexpr std::size_t kident_ = 2;
   std::size_t level_ = 0;
 
@@ -37,7 +36,7 @@ public:
 
     return *this;
   }
-} ident;
+};
 
 std::ostream& operator<<(std::ostream& os, const Ident& ident)
 {
@@ -47,19 +46,32 @@ std::ostream& operator<<(std::ostream& os, const Ident& ident)
 }
 } // anonymous
 
+struct Printer::Implem
+{
+  Ident ident{};
+};
+
+Printer::Printer() noexcept
+    : VisitorInterface::VisitorInterface()
+    , pimpl_{ std::make_unique<Implem>() }
+{
+}
+
+Printer::~Printer() noexcept = default;
+
 void Printer::operator()(const std::string& str) const
 {
-  ++ident;
-  std::cout << ident << "element: " << str << '\n';
-  --ident;
+  ++pimpl_->ident;
+  std::cout << pimpl_->ident << "element: " << str << '\n';
+  --pimpl_->ident;
 }
 
 void Printer::operator()(const ast::redir_node& redir) const
 {
   using parser::grammar::symbol_type;
 
-  ++ident;
-  std::cout << ident << "redirection: ";
+  ++pimpl_->ident;
+  std::cout << pimpl_->ident << "redirection: ";
 
   if (redir.io_number)
     std::cout << *(redir.io_number);
@@ -83,7 +95,7 @@ void Printer::operator()(const ast::redir_node& redir) const
     break;
   }
   std::cout << redir.file << '\n';
-  --ident;
+  --pimpl_->ident;
 }
 
 void Printer::operator()(const ast::cmd_element& element) const
@@ -93,13 +105,13 @@ void Printer::operator()(const ast::cmd_element& element) const
 
 void Printer::operator()(const ast::cmd_node& node) const
 {
-  ++ident;
-  std::cout << ident << "command =>\n";
+  ++pimpl_->ident;
+  std::cout << pimpl_->ident << "command =>\n";
 
   for (const auto& element : node)
     operator()(element);
 
-  --ident;
+  --pimpl_->ident;
 }
 
 void Printer::operator()(const ast::operand& op) const
@@ -111,7 +123,7 @@ void Printer::operator()(const ast::operator_node& node) const
 {
   using parser::grammar::symbol_type;
 
-  std::cout << ident << "operation ";
+  std::cout << pimpl_->ident << "operation ";
   switch (node.op_type)
   {
   case symbol_type::DOUBLE_AND:
@@ -133,29 +145,28 @@ void Printer::operator()(const ast::operator_node& node) const
 
 void Printer::operator()(const ast::expression_node& node) const
 {
-  ++ident;
-  std::cout << ident << "expression\n"
-            << ident << "{\n";
+  ++pimpl_->ident;
+  std::cout << pimpl_->ident << "expression\n" << pimpl_->ident << "{\n";
 
   operator()(node.first);
   for (const auto& operation : node.rest)
     operator()(operation);
 
-  std::cout << ident << "}\n";
-  --ident;
+  std::cout << pimpl_->ident << "}\n";
+  --pimpl_->ident;
 }
 
 void Printer::operator()(const ast::statement_node& node) const
 {
   using parser::grammar::symbol_type;
 
-  std::cout << ident << "statement"
+  std::cout << pimpl_->ident << "statement"
             << (node.separator == symbol_type::AND ? " [background]\n" : "\n")
-            << ident << "(\n";
+            << pimpl_->ident << "(\n";
 
   operator()(node.exp);
 
-  std::cout << ident << ")\n";
+  std::cout << pimpl_->ident << ")\n";
 }
 
 void Printer::operator()(const ast::ast_root& node) const

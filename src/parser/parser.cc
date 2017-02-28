@@ -1,14 +1,11 @@
 #include "parser.hh"
-
 #include <iostream>
-
 #include <boost/spirit/home/x3.hpp>
-
 #include "grammar/grammar.hh"
 
 namespace parser
 {
-ast::ast_root parse_input(const std::string &input)
+ast::ast_root parse_input(const std::string& input)
 {
   using boost::spirit::x3::expectation_failure;
   using boost::spirit::x3::space;
