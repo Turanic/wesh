@@ -6,10 +6,11 @@
 
 namespace exec
 {
-int start_process(std::string name, std::vector<std::string> args)
+namespace
 {
-  const auto pid = fork();
-
+std::vector<char*> convert_arg(std::string&& name,
+                               std::vector<std::string>&& args)
+{
   std::vector<char*> c_args{};
   c_args.push_back(&name[0]);
   std::transform(args.begin(),
@@ -17,6 +18,15 @@ int start_process(std::string name, std::vector<std::string> args)
                  std::back_inserter(c_args),
                  [](auto& str) { return &str[0]; });
   c_args.push_back(nullptr);
+
+  return c_args;
+}
+} // anonymous
+
+int start_process(std::string&& name, std::vector<std::string>&& args)
+{
+  const auto pid = fork();
+  const auto c_args = convert_arg(std::move(name), std::move(args));
 
   switch (pid)
   {

@@ -20,8 +20,8 @@ public:
   {
     assert(name);
     std::cerr << "executing command " << *name << '\n';
-    rcode = start_process(*name, args);
-    args.clear();
+    rcode = start_process(std::move(*name), std::move(args));
+    args = {};
     name = {};
   }
 
