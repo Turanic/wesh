@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER "clang++")
 # directories variables
 set(SRC_DIR src/)
 set(OUT_DIR out/)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/${OUT_DIR})
 
 # sources dirs
 add_subdirectory(${SRC_DIR})
