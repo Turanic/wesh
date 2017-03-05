@@ -1,17 +1,18 @@
 #include <iostream>
-#include <string>
 #include <ast/visitors/launcher.hh>
 #include <ast/visitors/printer.hh>
 #include <parser/parser.hh>
+#include <readline/readline.hh>
 
 int main(void)
 {
   /* input construction */
-  std::string input1{ "echo test > lol.txt; true && true || echo check; cat "
-                      "lol.txt | grep -rn mdr;" };
+  // std::string input1{ "echo test > lol.txt; true && true || echo check;" };
+
+  readline::print_prompt(std::cout);
 
   /* parse input */
-  const auto ast = parser::parse_input(input1);
+  const auto ast = parser::parse_input(readline::read_input(std::cin));
 
   /* execute input */
   ast::visitors::Printer printer_visitor{};

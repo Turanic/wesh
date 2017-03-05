@@ -12,6 +12,7 @@ include_directories(
 add_subdirectory(ast)
 add_subdirectory(exec)
 add_subdirectory(parser)
+add_subdirectory(readline)
 
 
 # create the executable with project name
@@ -19,4 +20,5 @@ add_executable(${PROJECT_NAME}
   main.cc
   $<TARGET_OBJECTS:ast_objs>
   $<TARGET_OBJECTS:exec_objs>
-  $<TARGET_OBJECTS:parser_objs>)
+  $<TARGET_OBJECTS:parser_objs>
+  $<TARGET_OBJECTS:readline_objs>)
