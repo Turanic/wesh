@@ -6,19 +6,19 @@
 
 int main(void)
 {
-  /* input construction */
-  // std::string input1{ "echo test > lol.txt; true && true || echo check;" };
+  while (true)
+  {
+    readline::print_prompt(std::cout);
 
-  readline::print_prompt(std::cout);
+    /* parse input */
+    const auto ast = parser::parse_input(readline::read_input(std::cin));
 
-  /* parse input */
-  const auto ast = parser::parse_input(readline::read_input(std::cin));
-
-  /* execute input */
-  ast::visitors::Printer printer_visitor{};
-  ast::visitors::Launcher launcher_visitor{};
-  printer_visitor(ast);
-  launcher_visitor(ast);
+    /* execute input */
+    ast::visitors::Printer printer_visitor{};
+    ast::visitors::Launcher launcher_visitor{};
+    printer_visitor(ast);
+    launcher_visitor(ast);
+  }
 
   return 0;
 }

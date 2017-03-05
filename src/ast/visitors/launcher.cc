@@ -37,11 +37,11 @@ void Launcher::operator()(const ast::operator_node& node) const
   switch (node.op_type)
   {
   case symbol_type::DOUBLE_AND:
-    if (!current_cmd_.rcode)
+    if (current_cmd_.rcode)
       return;
     break;
   case symbol_type::DOUBLE_OR:
-    if (current_cmd_.rcode)
+    if (!current_cmd_.rcode)
       return;
     break;
   case symbol_type::OR:
