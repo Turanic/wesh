@@ -13,8 +13,9 @@ symbol_table_t& separators_get()
   {
     separators.add(";", symbol_type::SEMI_COLON);
     separators.add("&", symbol_type::AND);
-    separators.add("\n", symbol_type::SEMI_COLON);
     separators.add("\n\r", symbol_type::SEMI_COLON);
+    separators.add("\n", symbol_type::SEMI_COLON);
+    separators.add("\r", symbol_type::SEMI_COLON);
     first_call = false;
   }
 

@@ -11,6 +11,7 @@ std::string read_input(std::istream& is)
 {
   std::string input{};
   std::getline(is, input);
+  input += "\n";
 
   return input;
 }

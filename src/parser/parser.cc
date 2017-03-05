@@ -8,7 +8,7 @@ namespace parser
 ast::ast_root parse_input(const std::string& input)
 {
   using boost::spirit::x3::expectation_failure;
-  using boost::spirit::x3::space;
+  using boost::spirit::x3::blank;
 
   auto iter = input.begin();
   const auto end = input.end();
@@ -17,7 +17,7 @@ ast::ast_root parse_input(const std::string& input)
   ast::ast_root ast;
   try
   {
-    success = phrase_parse(iter, end, rule_get(), space, ast);
+    success = phrase_parse(iter, end, rule_get(), blank, ast);
   }
   catch (const expectation_failure<decltype(iter)>& error)
   {
