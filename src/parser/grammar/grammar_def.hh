@@ -88,7 +88,7 @@ BOOST_SPIRIT_DEFINE(wesh_rule,
                     prefix_rule,
                     redirection_rule,
                     word,
-                    assignement);
+                    assignement)
 /* *** */
 
 } // grammar

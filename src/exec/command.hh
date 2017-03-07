@@ -22,7 +22,7 @@ public:
     std::cerr << "executing command " << *name << '\n';
     rcode = start_process(std::move(*name), std::move(args));
     args = {};
-    name = {};
+    name = boost::optional<std::string>{};
   }
 
   void operator+=(const std::string& arg)

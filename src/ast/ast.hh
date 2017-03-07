@@ -23,6 +23,16 @@ struct cmd_element : public variant<std::string, redir_node>
 {
   using base_type::base_type;
   using base_type::operator=;
+  cmd_element()
+      : base_type(){};
+  explicit cmd_element(const std::string& val)
+      : base_type(val)
+  {
+  }
+  explicit cmd_element(const redir_node& val)
+      : base_type(val)
+  {
+  }
 };
 using cmd_node = std::vector<forward_ast<cmd_element>>;
 
@@ -31,6 +41,16 @@ struct operand : public variant<cmd_node, forward_ast<expression_node>>
 {
   using base_type::base_type;
   using base_type::operator=;
+  operand()
+      : base_type(){};
+  explicit operand(const cmd_node& val)
+      : base_type(val)
+  {
+  }
+  explicit operand(forward_ast<expression_node> val)
+      : base_type(val)
+  {
+  }
 };
 
 struct operator_node
