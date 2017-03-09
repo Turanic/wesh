@@ -1,14 +1,16 @@
 #include "opt_parser.hh"
 #include <iostream>
 #include <boost/program_options.hpp>
+#include "argument_extractor.hh"
+#include "interactive_extractor.hh"
 
 #ifndef WESH_VERSION
-  #define WESH_VERSION 0.0
+#define WESH_VERSION 0.0
 #endif
 
 namespace options
 {
-void parse_options(int argc, char* argv[])
+std::unique_ptr<InputExtractorInterface> parse_options(int argc, char* argv[])
 {
   namespace opt = boost::program_options;
 
@@ -17,6 +19,10 @@ void parse_options(int argc, char* argv[])
     auto add = description.add_options();
     add("help,h", "show usage");
     add("version,v", "display current version");
+    add("interactive,i", "use the interactive shell");
+    add("command,c",
+        opt::value<std::string>()->default_value(""),
+        "pass the command in a string");
   }
   const auto parse_result = opt::parse_command_line(argc, argv, description);
 
@@ -27,13 +33,21 @@ void parse_options(int argc, char* argv[])
   if (vmap.count("help"))
   {
     std::cout << description << std::endl;
-    std::exit(0);
+    return nullptr;
   }
 
   if (vmap.count("version"))
   {
-    std::cout << "Wesh pre-alpha version " <<  WESH_VERSION << std::endl;
-    std::exit(0);
+    std::cout << "Wesh pre-alpha version " << WESH_VERSION << std::endl;
+    return nullptr;
   }
+
+  if (vmap.count("interactive"))
+    return std::make_unique<InteractiveExtractor>();
+  if (vmap.count("command"))
+    return std::make_unique<ArgumentExtractor>(
+      vmap["command"].as<std::string>());
+
+  return std::make_unique<InteractiveExtractor>();
 }
 } // options

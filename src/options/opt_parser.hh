@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
+#include "input_extractor_interface.hh"
+
 namespace options
 {
-void parse_options(int argc, char* argv[]);
+std::unique_ptr<InputExtractorInterface> parse_options(int argc, char* argv[]);
 } // options
