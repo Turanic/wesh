@@ -3,13 +3,13 @@
 #include <iostream>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "builtins/builtin.hh"
 
 namespace exec
 {
 namespace
 {
-std::vector<char*> convert_arg(std::string&& name,
-                               std::vector<std::string>&& args)
+int exec_program(std::string name, std::vector<std::string> args)
 {
   std::vector<char*> c_args{};
   c_args.push_back(&name[0]);
@@ -18,15 +18,15 @@ std::vector<char*> convert_arg(std::string&& name,
                  std::back_inserter(c_args),
                  [](auto& str) { return &str[0]; });
   c_args.push_back(nullptr);
+  execvp(name.c_str(), c_args.data());
 
-  return c_args;
+  return -1;
 }
 } // anonymous
 
-int start_process(std::string&& name, std::vector<std::string>&& args)
+int start_process(const std::string& name, const std::vector<std::string>& args)
 {
   const auto pid = fork();
-  const auto c_args = convert_arg(std::move(name), std::move(args));
 
   switch (pid)
   {
@@ -34,8 +34,10 @@ int start_process(std::string&& name, std::vector<std::string>&& args)
     std::cerr << "Error while forking\n";
     return -1;
   case 0: // child
-    execvp(name.c_str(), c_args.data());
-    return -1;
+    if (builtins::builtin(name, args) == 1)
+      return 1;
+
+    return exec_program(name, args);
   default: // parent
     int status = 0;
     waitpid(pid, &status, 0);

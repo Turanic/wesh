@@ -1,6 +1,6 @@
 # set compilation flags
 set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wextra -pedantic -DWESH_VERSION=${WESH_VERSION}")
-set(CMAKE_CXX_FLAGS_DEBUG "-g3 -fsanitize=address -fsanitize=undefined -Werror -Wno-unused-parameter")
+set(CMAKE_CXX_FLAGS_DEBUG "-g3 -Werror -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 # include directories for compilation (-I)
