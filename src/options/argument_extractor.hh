@@ -10,6 +10,7 @@ public:
   ArgumentExtractor(std::string argument) noexcept;
 
   std::string input_get() const override;
+  bool should_loop() const noexcept override;
 
 private:
   std::string input_;

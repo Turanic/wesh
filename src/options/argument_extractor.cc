@@ -10,6 +10,11 @@ ArgumentExtractor::ArgumentExtractor(std::string argument) noexcept
 
 std::string ArgumentExtractor::input_get() const
 {
-  return input_;
+  return input_ + '\n';
+}
+
+bool ArgumentExtractor::should_loop() const noexcept
+{
+  return false;
 }
 } // options

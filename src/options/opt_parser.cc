@@ -20,9 +20,7 @@ std::unique_ptr<InputExtractorInterface> parse_options(int argc, char* argv[])
     add("help,h", "show usage");
     add("version,v", "display current version");
     add("interactive,i", "use the interactive shell");
-    add("command,c",
-        opt::value<std::string>()->default_value(""),
-        "pass the command in a string");
+    add("command,c", opt::value<std::string>(), "pass the command in a string");
   }
   const auto parse_result = opt::parse_command_line(argc, argv, description);
 

@@ -10,4 +10,9 @@ std::string InteractiveExtractor::input_get() const
   return readline::read_input(std::cin);
 }
 
+bool InteractiveExtractor::should_loop() const noexcept
+{
+  return true;
+}
+
 } // options
