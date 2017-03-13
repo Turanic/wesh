@@ -26,6 +26,9 @@ int exec_program(std::string name, std::vector<std::string> args)
 
 int start_process(const std::string& name, const std::vector<std::string>& args)
 {
+  if (auto rcode = builtins::builtin(name, args))
+    return *rcode;
+
   const auto pid = fork();
 
   switch (pid)
@@ -34,9 +37,6 @@ int start_process(const std::string& name, const std::vector<std::string>& args)
     std::cerr << "Error while forking\n";
     return -1;
   case 0: // child
-    if (builtins::builtin(name, args) == 1)
-      return 1;
-
     return exec_program(name, args);
   default: // parent
     int status = 0;
