@@ -10,28 +10,14 @@ namespace exec
 {
 class Command
 {
+public:
+  bool rcode = false;
+
+  void operator()();
+  void operator+=(const std::string& arg);
+
 private:
   boost::optional<std::string> name{};
   std::vector<std::string> args{};
-
-public:
-  bool rcode = false;
-  void operator()()
-  {
-    assert(name);
-    std::cerr << "executing command " << *name << '\n';
-    rcode = start_process(*name, args);
-    args = {};
-    name = boost::optional<std::string>{};
-  }
-
-  void operator+=(const std::string& arg)
-  {
-    std::cerr << " ... adding " << arg << "...\n";
-    if (name)
-      args.push_back(arg);
-    else
-      name = arg;
-  }
 };
 } // exec
