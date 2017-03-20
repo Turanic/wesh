@@ -5,6 +5,6 @@
 
 namespace readline
 {
-void print_prompt(std::ostream& os);
-std::string read_input(std::istream& is);
+void print_prompt(std::ostream& stream);
+std::string read_input(std::istream& stream);
 } // readline

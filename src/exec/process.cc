@@ -37,7 +37,8 @@ int start_process(const std::string& name, const std::vector<std::string>& args)
     std::cerr << "Error while forking\n";
     return -1;
   case 0: // child
-    return exec_program(name, args);
+    exec_program(name, args);
+    std::exit(1);
   default: // parent
     int status = 0;
     waitpid(pid, &status, 0);

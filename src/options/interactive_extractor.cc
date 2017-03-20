@@ -1,5 +1,4 @@
 #include "interactive_extractor.hh"
-#include <iostream>
 #include <readline/readline.hh>
 
 namespace options

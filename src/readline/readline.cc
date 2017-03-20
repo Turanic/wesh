@@ -1,17 +1,26 @@
 #include "readline.hh"
+#include <cstdio>
 
 namespace readline
 {
-void print_prompt(std::ostream& os)
+void print_prompt(std::ostream& stream)
 {
-  os << "WESH pre-alpha# ";
+  constexpr auto ps1 = "WESH pre-alpha";
+  stream << ps1 << "# ";
 }
 
-std::string read_input(std::istream& is)
+std::string read_input(std::istream& stream)
 {
   std::string input{};
-  std::getline(is, input);
-  input += "\n";
+
+  char symbol = '\0';
+  do
+  {
+    symbol = stream.get();
+    input.push_back(symbol);
+    std::cerr << symbol;
+  }
+  while (symbol != '\n');
 
   return input;
 }
