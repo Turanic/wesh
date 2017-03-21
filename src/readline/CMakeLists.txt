@@ -1,4 +1,5 @@
 set(SRC_READLINE
+    events/on_backspace.cc
     readline.cc
     terminal.cc)
 
