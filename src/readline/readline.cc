@@ -9,7 +9,7 @@ void print_prompt(std::ostream& stream)
   stream << ps1 << "# ";
 }
 
-std::string read_input(std::istream& stream)
+std::string read_input(std::istream& stream, Terminal& term)
 {
   std::string input{};
 
@@ -17,12 +17,11 @@ std::string read_input(std::istream& stream)
   do
   {
     symbol = static_cast<char>(stream.get());
-    input.push_back(symbol);
-    std::cerr << symbol;
+    term.send_event(symbol);
   }
   while (symbol != '\n');
 
-  return input;
+  return term.input_get();
 }
 
 } // readline

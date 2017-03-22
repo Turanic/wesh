@@ -14,7 +14,7 @@ class OnBackSpace : public ObserverInterface
 public:
   OnBackSpace(std::weak_ptr<std::vector<char>> line_buffer) noexcept;
 
-  void operator()() const noexcept override;
+  void operator()() noexcept override;
   std::string events_get() const noexcept override;
 
 private:

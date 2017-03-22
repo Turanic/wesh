@@ -12,6 +12,6 @@ public:
   bool should_loop() const noexcept override;
 
 private:
-  const readline::TerminalCfg term_cfg_{};
+  mutable readline::Terminal term_{};
 };
 } // options
