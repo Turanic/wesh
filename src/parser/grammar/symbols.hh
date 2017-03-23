@@ -27,10 +27,10 @@ enum class symbol_type : int8_t
 
 /* symbols tables access */
 using symbol_table_t = symbols<symbol_type>;
-symbol_table_t& separators_get();
-symbol_table_t& logical_op_get();
-symbol_table_t& pipe_op_get();
-symbol_table_t& redir_op_get();
+const symbol_table_t& separators_get();
+const symbol_table_t& logical_op_get();
+const symbol_table_t& pipe_op_get();
+const symbol_table_t& redir_op_get();
 /* *** */
 
 } // grammar
