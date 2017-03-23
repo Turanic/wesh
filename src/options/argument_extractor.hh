@@ -9,8 +9,8 @@ class ArgumentExtractor : public InputExtractorInterface
 public:
   ArgumentExtractor(std::string argument) noexcept;
 
-  std::string input_get() const override;
-  bool should_loop() const noexcept override;
+  std::string input_get() override;
+  bool should_loop() noexcept override;
 
 private:
   std::string input_;

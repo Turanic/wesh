@@ -8,12 +8,12 @@ ArgumentExtractor::ArgumentExtractor(std::string argument) noexcept
 {
 }
 
-std::string ArgumentExtractor::input_get() const
+std::string ArgumentExtractor::input_get()
 {
   return input_ + '\n';
 }
 
-bool ArgumentExtractor::should_loop() const noexcept
+bool ArgumentExtractor::should_loop() noexcept
 {
   return false;
 }

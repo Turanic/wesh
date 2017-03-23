@@ -3,13 +3,13 @@
 
 namespace options
 {
-std::string InteractiveExtractor::input_get() const
+std::string InteractiveExtractor::input_get()
 {
   readline::print_prompt(std::cout);
   return readline::read_input(std::cin, term_);
 }
 
-bool InteractiveExtractor::should_loop() const noexcept
+bool InteractiveExtractor::should_loop() noexcept
 {
   return true;
 }

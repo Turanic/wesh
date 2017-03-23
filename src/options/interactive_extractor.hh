@@ -8,10 +8,10 @@ namespace options
 class InteractiveExtractor : public InputExtractorInterface
 {
 public:
-  std::string input_get() const override;
-  bool should_loop() const noexcept override;
+  std::string input_get() override;
+  bool should_loop() noexcept override;
 
 private:
-  mutable readline::Terminal term_{};
+  readline::Terminal term_{};
 };
 } // options

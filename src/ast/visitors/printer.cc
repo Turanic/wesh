@@ -59,14 +59,14 @@ Printer::Printer() noexcept
 
 Printer::~Printer() noexcept = default;
 
-void Printer::operator()(const std::string& str) const
+void Printer::operator()(const std::string& str)
 {
   ++pimpl_->ident;
   std::cout << pimpl_->ident << "element: " << str << '\n';
   --pimpl_->ident;
 }
 
-void Printer::operator()(const ast::redir_node& redir) const
+void Printer::operator()(const ast::redir_node& redir)
 {
   using parser::grammar::symbol_type;
 
@@ -98,12 +98,12 @@ void Printer::operator()(const ast::redir_node& redir) const
   --pimpl_->ident;
 }
 
-void Printer::operator()(const ast::cmd_element& element) const
+void Printer::operator()(const ast::cmd_element& element)
 {
-  boost::apply_visitor(*this, element);
+  element.apply_visitor(*this);
 }
 
-void Printer::operator()(const ast::cmd_node& node) const
+void Printer::operator()(const ast::cmd_node& node)
 {
   ++pimpl_->ident;
   std::cout << pimpl_->ident << "command =>\n";
@@ -114,12 +114,12 @@ void Printer::operator()(const ast::cmd_node& node) const
   --pimpl_->ident;
 }
 
-void Printer::operator()(const ast::operand& op) const
+void Printer::operator()(const ast::operand& op)
 {
-  boost::apply_visitor(*this, op);
+  op.apply_visitor(*this);
 }
 
-void Printer::operator()(const ast::operator_node& node) const
+void Printer::operator()(const ast::operator_node& node)
 {
   using parser::grammar::symbol_type;
 
@@ -143,7 +143,7 @@ void Printer::operator()(const ast::operator_node& node) const
   operator()(node.second);
 }
 
-void Printer::operator()(const ast::expression_node& node) const
+void Printer::operator()(const ast::expression_node& node)
 {
   ++pimpl_->ident;
   std::cout << pimpl_->ident << "expression\n" << pimpl_->ident << "{\n";
@@ -156,7 +156,7 @@ void Printer::operator()(const ast::expression_node& node) const
   --pimpl_->ident;
 }
 
-void Printer::operator()(const ast::statement_node& node) const
+void Printer::operator()(const ast::statement_node& node)
 {
   using parser::grammar::symbol_type;
 
@@ -169,7 +169,7 @@ void Printer::operator()(const ast::statement_node& node) const
   std::cout << pimpl_->ident << ")\n";
 }
 
-void Printer::operator()(const ast::ast_root& node) const
+void Printer::operator()(const ast::ast_root& node)
 {
   std::cout << "###ast - begin###\n";
   if (node)
