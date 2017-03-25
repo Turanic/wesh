@@ -3,10 +3,16 @@ set(CMAKE_CXX_FLAGS "-std=c++14 -Wall -Wextra -Weffc++ -pedantic -DWESH_VERSION=
 set(CMAKE_CXX_FLAGS_DEBUG "-g3 -Werror -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+# find needed packages
+set(CURSES_NEED_NCURSES TRUE)
+find_package(Boost COMPONENTS program_options REQUIRED)
+find_package(Curses REQUIRED)
+
 # include directories for compilation (-I)
 include_directories(
   .
-  ${Boost_INCLUDE_DIRS})
+  ${Boost_INCLUDE_DIRS}
+  ${CURSES_INCLUDE_DIRS})
 
 # get objects libraries from sources
 add_subdirectory(ast)
@@ -25,4 +31,4 @@ add_executable(${PROJECT_NAME}
   $<TARGET_OBJECTS:options_objs>
   $<TARGET_OBJECTS:parser_objs>
   $<TARGET_OBJECTS:readline_objs>)
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${CURSES_LIBRARIES})

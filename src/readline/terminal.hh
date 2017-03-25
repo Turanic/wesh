@@ -20,8 +20,8 @@ public:
 private:
   using observer_ptr_t = std::shared_ptr<events::ObserverInterface>;
 
-  std::unique_ptr<struct termios> term_config_;
   std::shared_ptr<std::vector<char>> line_buffer_;
+  std::unique_ptr<termios> term_config_;
   std::unordered_map<char, observer_ptr_t> observers_;
 
   void register_observer(observer_ptr_t&& on_event);
