@@ -12,7 +12,7 @@ namespace events
 class OnBackSpace : public ObserverInterface
 {
 public:
-  OnBackSpace(std::weak_ptr<std::vector<char>> line_buffer) noexcept;
+  explicit OnBackSpace(std::weak_ptr<std::vector<char>> line_buffer) noexcept;
 
   void operator()() noexcept override;
   std::string events_get() const noexcept override;

@@ -6,6 +6,7 @@
 =======
 >>>>>>> readline: add termcaps handling + functional observer
 #include "events/on_backspace.hh"
+#include "events/on_arrow.hh"
 #include "termcaps.hh"
 
 namespace readline
@@ -20,6 +21,7 @@ Terminal::Terminal()
 
   /* register key events observers */
   register_observer(std::make_shared<events::OnBackSpace>(line_buffer_));
+  register_observer(std::make_shared<events::OnArrow>());
 }
 
 Terminal::~Terminal()
