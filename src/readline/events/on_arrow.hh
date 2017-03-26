@@ -9,10 +9,10 @@ namespace readline
 {
 namespace events
 {
-class OnBackSpace : public ObserverInterface
+class OnArrow : public ObserverInterface
 {
 public:
-  explicit OnBackSpace(std::weak_ptr<LineBuffer> line_buffer) noexcept;
+  explicit OnArrow(std::weak_ptr<LineBuffer> line_buffer) noexcept;
 
   void operator()() noexcept override;
   std::string events_get() const noexcept override;

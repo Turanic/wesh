@@ -5,7 +5,7 @@ namespace readline
 {
 namespace events
 {
-OnBackSpace::OnBackSpace(std::weak_ptr<std::vector<char>> line_buffer) noexcept
+OnBackSpace::OnBackSpace(std::weak_ptr<LineBuffer> line_buffer) noexcept
     : buffer_ref_{ std::move(line_buffer) }
 {
 }
@@ -13,12 +13,15 @@ OnBackSpace::OnBackSpace(std::weak_ptr<std::vector<char>> line_buffer) noexcept
 void OnBackSpace::operator()() noexcept
 {
   auto buffer = buffer_ref_.lock();
-  if (buffer->empty())
+  if (not buffer || not buffer->cursor_pos)
     return;
 
   ::readline::termcaps::move_cursor_left();
+  buffer->cursor_pos--;
+
   ::readline::termcaps::delete_selected_char();
-  buffer->pop_back();
+  buffer->discard_character(buffer->cursor_pos);
+
 }
 
 std::string OnBackSpace::events_get() const noexcept
