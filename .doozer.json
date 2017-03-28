@@ -1,0 +1,16 @@
+{
+  "targets": {
+    "xenial-amd64": {
+
+      "buildenv": "xenial-amd64",
+      "builddeps": [
+        "build-essential",
+        "libboost-all-dev"
+      ],
+      "buildcmd": [
+        "./configure DEBUG",
+        "make -j ${PARALLEL}",
+      ],
+    }
+  }
+}
