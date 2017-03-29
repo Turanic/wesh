@@ -42,16 +42,16 @@ using redirection_rule_type = rule<redirection_rule_class, ast::redir_node>;
 using word_type = rule<word_class, std::string>;
 using assignement_type = rule<assignement_class, std::string>;
 
-wesh_rule_type wesh_rule{ "main_rule" };
-statements_rule_type statements_rule{ "statement_list" };
-logics_rule_type logics_rule{ "logic_list" };
-pipeline_rule_type pipeline_rule{ "pipeline" };
-simple_command_rule_type simple_command_rule{ "simple_command" };
-element_rule_type element_rule{ "element" };
-prefix_rule_type prefix_rule{ "prefix" };
-redirection_rule_type redirection_rule{ "redirection" };
-word_type word{ "word" };
-assignement_type assignement{ "assignement" };
+static wesh_rule_type wesh_rule{ "main_rule" };
+static statements_rule_type statements_rule{ "statement_list" };
+static logics_rule_type logics_rule{ "logic_list" };
+static pipeline_rule_type pipeline_rule{ "pipeline" };
+static simple_command_rule_type simple_command_rule{ "simple_command" };
+static element_rule_type element_rule{ "element" };
+static prefix_rule_type prefix_rule{ "prefix" };
+static redirection_rule_type redirection_rule{ "redirection" };
+static word_type word{ "word" };
+static assignement_type assignement{ "assignement" };
 /* *** */
 
 /* defining rules */

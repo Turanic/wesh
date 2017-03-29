@@ -16,7 +16,7 @@ std::string read_input(std::istream& stream)
   char symbol = '\0';
   do
   {
-    symbol = stream.get();
+    symbol = static_cast<char>(stream.get());
     input.push_back(symbol);
     std::cerr << symbol;
   }

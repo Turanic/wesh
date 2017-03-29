@@ -1,0 +1,23 @@
+language: cpp
+compiler: gcc
+os: linux
+dist: trusty
+
+script:
+  - ./configure DEBUG
+  - make
+
+cache:
+  apt: true
+
+addons:
+  apt:
+    sources: # Big and ugly hack.... but it works
+      - sourceline: 'deb http://en.archive.ubuntu.com/ubuntu/ zesty main restricted universe multiverse'
+    update-alternatives:
+      - install /usr/bin/gcc gcc /usr/bin/gcc-6 90
+      - install /usr/bin/g++ g++ /usr/bin/g++-6 90
+    packages:
+      - gcc-6
+      - g++-6
+      - libboost-all-dev

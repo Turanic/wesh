@@ -15,7 +15,7 @@ add_subdirectory(options)
 add_subdirectory(parser)
 add_subdirectory(readline)
 
-find_package(Boost COMPONENTS program_options REQUIRED)
+find_package(Boost 1.62.0 COMPONENTS program_options REQUIRED)
 
 # create the executable with project name
 add_executable(${PROJECT_NAME}

@@ -63,8 +63,10 @@ boost::optional<int> builtin(const std::string& name,
     return echo(args);
   case builtins::EXIT:
     exit();
-    return 0;
   };
+
+  assert(false && "unreachable code reached");
+  return -1;
 }
 } // builtins
 } // exec
