@@ -23,7 +23,7 @@ ast::ast_root parse_input(const std::string& input)
   {
     std::cerr << "syntax error : expecting " << error.which()
               << " after character " << *(error.where()) << '\n';
-    throw error;
+    throw;
   }
 
   if (!success || iter != end)

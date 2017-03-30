@@ -14,9 +14,9 @@ using parser::grammar::symbol_type;
 
 struct redir_node
 {
-  boost::optional<long> io_number;
-  symbol_type type;
-  std::string file;
+  boost::optional<long> io_number{};
+  symbol_type type{};
+  std::string file{};
 };
 
 struct cmd_element : public variant<std::string, redir_node>
@@ -24,7 +24,7 @@ struct cmd_element : public variant<std::string, redir_node>
   using base_type::base_type;
   using base_type::operator=;
   cmd_element()
-      : base_type(){};
+      : base_type(){}
   explicit cmd_element(const std::string& val)
       : base_type(val)
   {
@@ -42,7 +42,7 @@ struct operand : public variant<cmd_node, forward_ast<expression_node>>
   using base_type::base_type;
   using base_type::operator=;
   operand()
-      : base_type(){};
+      : base_type(){}
   explicit operand(const cmd_node& val)
       : base_type(val)
   {
@@ -55,20 +55,20 @@ struct operand : public variant<cmd_node, forward_ast<expression_node>>
 
 struct operator_node
 {
-  symbol_type op_type;
-  operand second;
+  symbol_type op_type{};
+  operand second{};
 };
 
 struct expression_node
 {
-  operand first;
-  std::vector<operator_node> rest;
+  operand first{};
+  std::vector<operator_node> rest{};
 };
 
 struct statement_node
 {
-  expression_node exp;
-  symbol_type separator;
+  expression_node exp{};
+  symbol_type separator{};
 };
 
 using statements = std::vector<statement_node>;

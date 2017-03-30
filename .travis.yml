@@ -6,6 +6,7 @@ dist: trusty
 script:
   - ./configure DEBUG
   - make
+  - ./out/wesh -c "echo Success"
 
 cache:
   apt: true
