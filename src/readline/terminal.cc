@@ -1,10 +1,13 @@
 #include "terminal.hh"
-#include "events/on_backspace.hh"
+#include <cstring>
+#include <iostream>
 #include <unordered_map>
 #include <vector>
 #include "events/on_arrow.hh"
 #include "events/on_backspace.hh"
+#include "events/on_backspace.hh"
 #include "line_buffer.hh"
+#include "readline.hh"
 #include "termcaps.hh"
 
 namespace readline
@@ -57,7 +60,14 @@ bool Terminal::next_char()
     pimpl_->line_buffer_->push_character(key_pressed,
                                          pimpl_->line_buffer_->cursor_pos);
     pimpl_->line_buffer_->cursor_pos++;
-    printf("%c", key_pressed);
+    termcaps::clear_line();
+
+    /* FIXME
+     * Inserting a char without redrawing all the buffer should be doable. */
+    print_prompt();
+    std::cout << *pimpl_->line_buffer_;
+    termcaps::set_cursor_offset(pimpl_->line_buffer_->cursor_pos
+                                + std::strlen(kps1) + 2);
   }
 
   return true;

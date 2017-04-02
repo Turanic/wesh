@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -13,12 +14,18 @@ public:
   void clear_buffer() noexcept;
 
   operator char*() noexcept;
-  operator std::string() noexcept;
+  operator std::string() const noexcept;
 
   std::size_t size() const noexcept;
 
-  std::size_t cursor_pos;
+  std::size_t cursor_pos = 0;
+
 private:
   std::vector<char> buffer_{};
+
+  friend std::ostream& operator<<(std::ostream& os, const LineBuffer& buffer);
 };
+
+std::ostream& operator<<(std::ostream& os, const LineBuffer& buffer);
+
 } // readline

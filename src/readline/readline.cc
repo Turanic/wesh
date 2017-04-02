@@ -3,17 +3,17 @@
 
 namespace readline
 {
-void print_prompt(std::ostream& stream)
+void print_prompt()
 {
-  constexpr auto ps1 = "WESH pre-alpha";
-  stream << ps1 << "# ";
+  std::cout << kps1 << "# ";
 }
 
-std::string read_input(std::istream&, Terminal& term)
+std::string read_input(Terminal& term)
 {
   while (term.next_char())
   {
   }
+  std::cout << std::endl;
 
   return term.input_get();
 }

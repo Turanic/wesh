@@ -6,6 +6,8 @@
 
 namespace readline
 {
-void print_prompt(std::ostream& stream);
-std::string read_input(std::istream& stream, Terminal& terminal);
+constexpr auto kps1 = "WESH pre-alpha";
+
+void print_prompt();
+std::string read_input(Terminal& terminal);
 } // readline

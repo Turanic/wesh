@@ -40,9 +40,21 @@ void move_cursor_right()
   putp(tgetstr("nd", nullptr));
 }
 
+void set_cursor_offset(std::size_t offset)
+{
+  int current_col = tgetnum("co");
+  putp(tgoto(tgetstr("cm", nullptr), offset, current_col));
+}
+
 void delete_selected_char()
 {
   putp(tgetstr("dc", nullptr));
+}
+
+void clear_line()
+{
+  putp(tgetstr("dl", nullptr));
+  set_cursor_offset(0);
 }
 
 } // termcaps

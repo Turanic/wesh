@@ -28,7 +28,7 @@ LineBuffer::operator char*() noexcept
   return buffer_.data();
 }
 
-LineBuffer::operator std::string() noexcept
+LineBuffer::operator std::string() const noexcept
 {
   return { buffer_.data(), buffer_.size() };
 }
@@ -36,6 +36,13 @@ LineBuffer::operator std::string() noexcept
 std::size_t LineBuffer::size() const noexcept
 {
   return buffer_.size();
+}
+
+std::ostream& operator<<(std::ostream& os, const LineBuffer& buffer)
+{
+  os << buffer.operator std::string();
+
+  return os;
 }
 
 } // readline
