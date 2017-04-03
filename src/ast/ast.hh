@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <boost/optional.hpp>
+#include <experimental/optional>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <parser/grammar/symbols.hh>
 
@@ -11,10 +11,11 @@ namespace ast
 using boost::spirit::x3::forward_ast;
 using boost::spirit::x3::variant;
 using parser::grammar::symbol_type;
+using std::experimental::optional;
 
 struct redir_node
 {
-  boost::optional<long> io_number{};
+  optional<long> io_number{};
   symbol_type type{};
   std::string file{};
 };
@@ -72,6 +73,6 @@ struct statement_node
 };
 
 using statements = std::vector<statement_node>;
-using ast_root = boost::optional<statements>;
+using ast_root = optional<statements>;
 
 } // ast

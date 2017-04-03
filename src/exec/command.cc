@@ -9,7 +9,7 @@ void Command::operator()()
   std::cerr << "executing command " << *name << '\n';
   rcode = start_process(*name, args);
   args = {};
-  name = boost::optional<std::string>{};
+  name = {};
 }
 
 void Command::operator+=(const std::string& arg)

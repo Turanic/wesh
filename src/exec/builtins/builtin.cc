@@ -2,7 +2,6 @@
 #include <cassert>
 #include <cstdio>
 #include <unordered_map>
-#include <boost/optional.hpp>
 #include "echo.hh"
 #include "exit.hh"
 
@@ -19,7 +18,7 @@ enum class builtins : uint8_t
   EXIT = 2,
 };
 
-boost::optional<builtins> builtin_from_name(const std::string& name)
+std::experimental::optional<builtins> builtin_from_name(const std::string& name)
 {
   static std::unordered_map<std::string, builtins> builtins_name{
     { "builtin", builtins::BUILTIN },
@@ -29,16 +28,16 @@ boost::optional<builtins> builtin_from_name(const std::string& name)
 
   const auto iterator = builtins_name.find(name);
   if (iterator == builtins_name.end())
-    return boost::optional<builtins>{};
+    return std::experimental::optional<builtins>{};
 
   return iterator->second;
 }
 
 } // anonymous
 
-boost::optional<int> builtin(const std::string& name,
-                             const std::vector<std::string>& args,
-                             bool user_call)
+std::experimental::optional<int> builtin(const std::string& name,
+                           const std::vector<std::string>& args,
+                           bool user_call)
 {
   const auto builtin_opt = builtin_from_name(name);
   if (not builtin_opt)

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <cassert>
+#include <experimental/optional>
 #include <iostream>
 #include <vector>
-#include <boost/optional.hpp>
 #include "process.hh"
 
 namespace exec
@@ -17,7 +17,8 @@ public:
   void operator+=(const std::string& arg);
 
 private:
-  boost::optional<std::string> name{};
+
+  std::experimental::optional<std::string> name{};
   std::vector<std::string> args{};
 };
 } // exec
