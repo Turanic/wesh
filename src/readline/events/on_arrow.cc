@@ -2,9 +2,7 @@
 #include <cstdio>
 #include <readline/termcaps.hh>
 
-namespace readline
-{
-namespace events
+namespace readline::events
 {
 OnArrow::OnArrow(std::weak_ptr<LineBuffer> line_buffer) noexcept
     : buffer_ref_{ std::move(line_buffer) }
@@ -45,5 +43,4 @@ std::string OnArrow::events_get() const noexcept
 
   return events;
 }
-} // events
-} // readline
+} // readline::events

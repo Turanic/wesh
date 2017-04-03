@@ -3,9 +3,7 @@
 #include <iostream>
 #include <parser/grammar/symbols.hh>
 
-namespace ast
-{
-namespace visitors
+namespace ast::visitors
 {
 namespace
 {
@@ -180,5 +178,4 @@ void Printer::operator()(const ast::ast_root& node)
   std::cout << "##ast - end###\n";
 }
 
-} // visitors
-} // ast
+} // ast::visitors

@@ -5,9 +5,7 @@
 #include <exec/command.hh>
 #include "visitor_interface.hh"
 
-namespace ast
-{
-namespace visitors
+namespace ast::visitors
 {
 class Launcher : public VisitorInterface
 {
@@ -25,5 +23,4 @@ public:
 private:
   exec::Command current_cmd_{};
 };
-} // visitors
-} // ast
+} // ast::visitors

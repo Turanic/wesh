@@ -5,9 +5,7 @@
 #include "echo.hh"
 #include "exit.hh"
 
-namespace exec
-{
-namespace builtins
+namespace exec::builtins
 {
 namespace
 {
@@ -67,5 +65,4 @@ std::experimental::optional<int> builtin(const std::string& name,
   assert(false && "unreachable code reached");
   return -1;
 }
-} // builtins
-} // exec
+} // exec::builtins

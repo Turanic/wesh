@@ -1,8 +1,6 @@
 #include "exit.hh"
 
-namespace exec
-{
-namespace builtins
+namespace exec::builtins
 {
 const char* ExitCalled::what() const noexcept
 {
@@ -14,5 +12,4 @@ void exit()
 {
   throw ExitCalled{};
 }
-} // builtins
-} // exec
+} // exec::builtins

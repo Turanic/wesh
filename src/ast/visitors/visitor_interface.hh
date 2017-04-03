@@ -3,9 +3,7 @@
 #include <ast/ast.hh>
 #include <boost/variant/apply_visitor.hpp>
 
-namespace ast
-{
-namespace visitors
+namespace ast::visitors
 {
 class VisitorInterface : public boost::static_visitor<>
 {
@@ -27,5 +25,4 @@ public:
   virtual void operator()(const ast::statement_node& node) = 0;
   virtual void operator()(const ast::ast_root& node) = 0;
 };
-} // visitors
-} // ast
+} // ast::visitors

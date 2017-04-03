@@ -3,10 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace exec
-{
-namespace builtins
+namespace exec::builtins
 {
 int echo(const std::vector<std::string>& args);
-} // builtins
-} // exec
+} // exec::builtins

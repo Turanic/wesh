@@ -5,9 +5,7 @@
 #include <readline/line_buffer.hh>
 #include "observer_interface.hh"
 
-namespace readline
-{
-namespace events
+namespace readline::events
 {
 class OnArrow : public ObserverInterface
 {
@@ -20,5 +18,4 @@ public:
 private:
   std::weak_ptr<LineBuffer> buffer_ref_;
 };
-} // events
-} // readline
+} // readline::events

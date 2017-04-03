@@ -2,9 +2,7 @@
 
 #include <string>
 
-namespace readline
-{
-namespace events
+namespace readline::events
 {
 class ObserverInterface
 {
@@ -20,5 +18,4 @@ public:
   virtual void operator()() noexcept = 0;
   virtual std::string events_get() const noexcept = 0;
 };
-} // events
-} // readline
+} // readline::events

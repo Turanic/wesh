@@ -1,9 +1,7 @@
 #include "on_backspace.hh"
 #include <readline/termcaps.hh>
 
-namespace readline
-{
-namespace events
+namespace readline::events
 {
 OnBackSpace::OnBackSpace(std::weak_ptr<LineBuffer> line_buffer) noexcept
     : buffer_ref_{ std::move(line_buffer) }
@@ -31,5 +29,4 @@ std::string OnBackSpace::events_get() const noexcept
   return events;
 }
 
-} // events
-} // readline
+} // readline::events

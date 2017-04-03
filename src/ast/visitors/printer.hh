@@ -5,9 +5,7 @@
 #include <ast/ast.hh>
 #include "visitor_interface.hh"
 
-namespace ast
-{
-namespace visitors
+namespace ast::visitors
 {
 class Printer : public VisitorInterface
 {
@@ -33,5 +31,4 @@ private:
   struct Implem;
   std::unique_ptr<Implem> pimpl_;
 };
-} // visitors
-} // ast
+} // ast::visitors

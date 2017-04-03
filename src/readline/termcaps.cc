@@ -4,9 +4,7 @@
 #include <term.h>
 #include <unistd.h>
 
-namespace readline
-{
-namespace termcaps
+namespace readline::termcaps
 {
 termios init_terminal(char* buffer)
 {
@@ -40,7 +38,7 @@ void move_cursor_right()
   putp(tgetstr("nd", nullptr));
 }
 
-void set_cursor_offset(std::size_t offset)
+void set_cursor_offset(int offset)
 {
   int current_col = tgetnum("co");
   putp(tgoto(tgetstr("cm", nullptr), offset, current_col));
@@ -57,5 +55,4 @@ void clear_line()
   set_cursor_offset(0);
 }
 
-} // termcaps
-} // readline
+} // readline::termcaps

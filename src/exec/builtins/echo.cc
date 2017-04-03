@@ -1,9 +1,7 @@
 #include "echo.hh"
 #include <iostream>
 
-namespace exec
-{
-namespace builtins
+namespace exec::builtins
 {
 int echo(const std::vector<std::string>& args)
 {
@@ -17,5 +15,4 @@ int echo(const std::vector<std::string>& args)
 
   return 0;
 }
-} // builtins
-} // exec
+} // exec::builtins

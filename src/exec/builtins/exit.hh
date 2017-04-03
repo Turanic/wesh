@@ -2,9 +2,7 @@
 
 #include <exception>
 
-namespace exec
-{
-namespace builtins
+namespace exec::builtins
 {
 class ExitCalled : public std::exception
 {
@@ -14,5 +12,4 @@ class ExitCalled : public std::exception
 [[noreturn]]
 void exit();
 
-} // builtins
-} // exec
+} // exec::builtins
