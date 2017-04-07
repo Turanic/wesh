@@ -5,12 +5,12 @@ namespace readline
 {
 namespace events
 {
-OnBackSpace::OnBackSpace(std::weak_ptr<LineBuffer> line_buffer) noexcept
+OnBackSpace::OnBackSpace(std::weak_ptr<LineBuffer> line_buffer)
     : buffer_ref_{ std::move(line_buffer) }
 {
 }
 
-void OnBackSpace::operator()() noexcept
+void OnBackSpace::operator()()
 {
   auto buffer = buffer_ref_.lock();
   if (not buffer || not buffer->cursor_pos)
@@ -24,7 +24,7 @@ void OnBackSpace::operator()() noexcept
 
 }
 
-std::string OnBackSpace::events_get() const noexcept
+std::string OnBackSpace::events_get() const
 {
   static constexpr auto events = "\b\177";
 

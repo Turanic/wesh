@@ -6,6 +6,7 @@
 #include "events/on_arrow.hh"
 #include "events/on_backspace.hh"
 #include "events/on_end_of_line.hh"
+#include "events/on_exit.hh"
 #include "events/on_start_of_line.hh"
 #include "line_buffer.hh"
 #include "readline.hh"
@@ -41,10 +42,12 @@ Terminal::Terminal()
   const auto obs3 =
     std::make_shared<events::OnStartOfLine>(pimpl_->line_buffer_);
   const auto obs4 = std::make_shared<events::OnEndOfLine>(pimpl_->line_buffer_);
+  const auto obs5 = std::make_shared<events::OnExit>();
   pimpl_->register_observer(obs1);
   pimpl_->register_observer(obs2);
   pimpl_->register_observer(obs3);
   pimpl_->register_observer(obs4);
+  pimpl_->register_observer(obs5);
 }
 
 Terminal::~Terminal()

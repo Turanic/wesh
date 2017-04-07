@@ -2,6 +2,7 @@ set(SRC_READLINE
     events/on_arrow.cc
     events/on_backspace.cc
     events/on_end_of_line.cc
+    events/on_exit.cc
     events/on_start_of_line.cc
     line_buffer.cc
     readline.cc

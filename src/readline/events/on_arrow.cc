@@ -6,12 +6,12 @@ namespace readline
 {
 namespace events
 {
-OnArrow::OnArrow(std::weak_ptr<LineBuffer> line_buffer) noexcept
+OnArrow::OnArrow(std::weak_ptr<LineBuffer> line_buffer)
     : buffer_ref_{ std::move(line_buffer) }
 {
 }
 
-void OnArrow::operator()() noexcept
+void OnArrow::operator()()
 {
   auto buffer = buffer_ref_.lock();
   if (not buffer)
@@ -39,7 +39,7 @@ void OnArrow::operator()() noexcept
   };
 }
 
-std::string OnArrow::events_get() const noexcept
+std::string OnArrow::events_get() const
 {
   static constexpr auto events = "\033";
 

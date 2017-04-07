@@ -5,12 +5,12 @@ namespace readline
 {
 namespace events
 {
-OnEndOfLine::OnEndOfLine(std::weak_ptr<LineBuffer> line_buffer) noexcept
+OnEndOfLine::OnEndOfLine(std::weak_ptr<LineBuffer> line_buffer)
   : buffer_ref_{std::move(line_buffer)}
 {
 }
 
-void OnEndOfLine::operator()() noexcept
+void OnEndOfLine::operator()()
 {
   auto buffer = buffer_ref_.lock();
   if (not buffer)
@@ -23,7 +23,7 @@ void OnEndOfLine::operator()() noexcept
   }
 }
 
-std::string OnEndOfLine::events_get() const noexcept
+std::string OnEndOfLine::events_get() const
 {
   static constexpr auto events = "\005";
 

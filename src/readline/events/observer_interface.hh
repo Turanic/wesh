@@ -9,16 +9,17 @@ namespace events
 class ObserverInterface
 {
 public:
-  ObserverInterface() noexcept = default;
+  ObserverInterface() = default;
   virtual ~ObserverInterface() noexcept = default;
 
   ObserverInterface(const ObserverInterface&) = delete;
-  ObserverInterface(ObserverInterface&&) = delete;
-  ObserverInterface& operator=(const ObserverInterface&) = default;
-  ObserverInterface& operator=(ObserverInterface&&) = default;
+  ObserverInterface& operator=(const ObserverInterface&) = delete;
 
-  virtual void operator()() noexcept = 0;
-  virtual std::string events_get() const noexcept = 0;
+  ObserverInterface(ObserverInterface&&) noexcept = default;
+  ObserverInterface& operator=(ObserverInterface&&) noexcept = default;
+
+  virtual void operator()() = 0;
+  virtual std::string events_get() const = 0;
 };
 } // events
 } // readline
