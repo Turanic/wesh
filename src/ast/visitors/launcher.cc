@@ -1,48 +1,15 @@
 #include "launcher.hh"
 #include <cassert>
-#include <vector>
-#include <boost/optional.hpp>
-#include <exec/process.hh>
+#include <exec/command.hh>
 
 namespace ast
 {
 namespace visitors
 {
-namespace
-{
-class Command
-{
-private:
-  boost::optional<std::string> name{};
-  std::vector<std::string> args{};
-
-public:
-  bool operator()()
-  {
-    assert(name);
-
-    bool rcode = exec::start_process(*name, args);
-    args = {};
-    name = boost::optional<std::string>{};
-
-    return rcode;
-  }
-
-  void operator+=(const std::string& arg)
-  {
-    if (name)
-      args.push_back(arg);
-    else
-      name = arg;
-  }
-};
-
-} // anonymous
-
 struct Launcher::Implem
 {
-  Command cmd{};
-  bool last_rcode = false;
+  exec::Command cmd{};
+  exec::Command* current_cmd = &cmd;
 };
 
 Launcher::Launcher()
@@ -55,7 +22,7 @@ Launcher::~Launcher() noexcept = default;
 
 void Launcher::operator()(const std::string& str)
 {
-  pimpl_->cmd += str;
+  *pimpl_->current_cmd += str;
 }
 
 void Launcher::operator()(const ast::redir_node&)
@@ -71,7 +38,7 @@ void Launcher::operator()(const ast::cmd_node& node)
 {
   for (const auto& element : node)
     operator()(element);
-  pimpl_->last_rcode = pimpl_->cmd();
+  assert(pimpl_->cmd.executable());
 }
 
 void Launcher::operator()(const ast::operand& op)
@@ -83,18 +50,23 @@ void Launcher::operator()(const ast::operator_node& node)
 {
   using parser::grammar::symbol_type;
 
+  assert(pimpl_->cmd.executable());
+
   switch (node.op_type)
   {
   case symbol_type::DOUBLE_AND:
-    if (pimpl_->last_rcode)
+    pimpl_->current_cmd = &pimpl_->cmd;
+    if (pimpl_->cmd())
       return;
     break;
   case symbol_type::DOUBLE_OR:
-    if (!pimpl_->last_rcode)
+    pimpl_->current_cmd = &pimpl_->cmd;
+    if (not pimpl_->cmd())
       return;
     break;
   case symbol_type::OR:
-    break;
+  pimpl_->current_cmd = pimpl_->current_cmd->push_to_pipeline();
+  break;
   default:
     assert(false && "invalid operation");
     break;
@@ -112,6 +84,11 @@ void Launcher::operator()(const ast::expression_node& node)
 void Launcher::operator()(const ast::statement_node& node)
 {
   operator()(node.exp);
+  if (pimpl_->cmd.executable()) // then is has not been executed. So, execute it
+  {
+    pimpl_->current_cmd = &pimpl_->cmd;
+    pimpl_->cmd();
+  }
 }
 
 void Launcher::operator()(const ast::ast_root& node)

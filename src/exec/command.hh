@@ -1,23 +1,24 @@
 #pragma once
 
-#include <cassert>
-#include <iostream>
+#include <memory>
 #include <vector>
 #include <boost/optional.hpp>
-#include "process.hh"
 
 namespace exec
 {
 class Command
 {
 public:
-  bool rcode = false;
-
-  void operator()();
+  bool operator()();
   void operator+=(const std::string& arg);
+
+  bool executable() const;
+  Command* push_to_pipeline();
 
 private:
   boost::optional<std::string> name{};
   std::vector<std::string> args{};
+
+  std::unique_ptr<Command> next_{nullptr};
 };
 } // exec
