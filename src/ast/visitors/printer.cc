@@ -51,7 +51,7 @@ struct Printer::Implem
   Ident ident{};
 };
 
-Printer::Printer() noexcept
+Printer::Printer()
     : VisitorInterface::VisitorInterface()
     , pimpl_{ std::make_unique<Implem>() }
 {

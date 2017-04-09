@@ -12,7 +12,7 @@ namespace visitors
 class Printer : public VisitorInterface
 {
 public:
-  Printer() noexcept;
+  Printer();
   ~Printer() noexcept override;
   Printer(const Printer&) = delete;
   Printer& operator=(const Printer&) = delete;

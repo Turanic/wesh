@@ -2,7 +2,7 @@
 
 #include <string>
 #include <ast/ast.hh>
-#include <exec/command.hh>
+#include <memory>
 #include "visitor_interface.hh"
 
 namespace ast
@@ -12,6 +12,13 @@ namespace visitors
 class Launcher : public VisitorInterface
 {
 public:
+  Launcher();
+  ~Launcher() noexcept override;
+  Launcher(const Launcher&) = delete;
+  Launcher& operator=(const Launcher&) = delete;
+  Launcher(Launcher&&) noexcept = default;
+  Launcher& operator=(Launcher&&) noexcept = default;
+
   void operator()(const std::string& str) override;
   void operator()(const ast::redir_node& redir) override;
   void operator()(const ast::cmd_element& element) override;
@@ -23,7 +30,8 @@ public:
   void operator()(const ast::ast_root& node) override;
 
 private:
-  exec::Command current_cmd_{};
+  struct Implem;
+  std::unique_ptr<Implem> pimpl_;
 };
 } // visitors
 } // ast
