@@ -6,20 +6,35 @@
 
 namespace exec
 {
+Command::Command()
+    : previous_{nullptr}
+{
+}
+
+Command::Command(std::unique_ptr<Command>&& previous)
+    : previous_{std::move(previous)}
+{
+}
+
 bool Command::operator()()
 {
   assert(name);
 
+  if (previous_)
+  {
+    if (not start_pipeline(*name, args))
+      exec_pipeline();
+    else
+    {
+      previous_.reset();
+      return 0;
+    }
+  }
+
+
   bool rcode = start_process(*name, args);
   args = {};
   name = boost::optional<std::string>{};
-
-  if (next_)
-  {
-    std::cerr << "pipeline execution\n";
-    (*next_)();
-  }
-  next_.reset();
 
   return rcode;
 }
@@ -37,13 +52,15 @@ bool Command::executable() const
   return static_cast<bool>(name);
 }
 
-Command* Command::push_to_pipeline()
+void Command::exec_pipeline()
 {
-  assert(not next_);
-
-  next_ = std::make_unique<Command>();
-
-  return next_.get();
+  if (previous_)
+  {
+    exec_pipe(*name, args);
+    previous_->exec_pipeline();
+  }
+  else
+    exec_process(*name, args);
 }
 
 } // exec
